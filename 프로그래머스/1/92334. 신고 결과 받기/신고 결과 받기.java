@@ -13,9 +13,7 @@ class Solution {
         for(int i=0; i<id_list.length; i++){
             reporter.put(id_list[i],i);
         }
-        for (String s : reporter.keySet()) {
-            System.out.print(s+ reporter.get(s)+", ");
-        }
+    
         //countPerReported 초기화(key: 신고당한 사람, value: 신고당한 횟수)
         //동일한 신고자에 대한 중복 처리
         Set<String> reportSet = new HashSet<>();
@@ -45,10 +43,6 @@ class Solution {
             if(countPerReported.get(name2) >= k){
                 answer[reporter.get(name1)] += 1;
             }
-        }
-
-        for (String s : countPerReported.keySet()) {
-            System.out.print(s+ countPerReported.get(s)+", ");
         }
 
         return answer;
