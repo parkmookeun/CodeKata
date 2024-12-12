@@ -1,6 +1,6 @@
 import java.util.*;
 class Solution {
-    public static int solution(String[] want, int[] number, String[] discount) {
+    public int solution(String[] want, int[] number, String[] discount) {
         int answer = 0;
         //내가 원하는 품목의 종류와 개수를 담을 맵
         Map<String,Integer> wantedMap = new HashMap<>();
@@ -14,7 +14,6 @@ class Solution {
             wantedMap.put(want[i],number[i]);
         }
 
-//        System.out.println(wantedMap);
 
         //처음 10일간 할인 품목 맵 초기화 및 큐 초기화
         for(int i=0; i<10; i++){
@@ -23,8 +22,6 @@ class Solution {
             discountQue.add(discount[i]);
         }
 
-//        System.out.println(discountMap);
-//        System.out.println(discountQue);
 
         for(int i=10; i<=discount.length; i++){
             //비교
@@ -39,16 +36,13 @@ class Solution {
             discountMap.put(removed,discountMap.get(removed)-1);
             Integer value = discountMap.get(discount[i]) == null ? 1 : discountMap.get(discount[i])+1;
             discountMap.put(discount[i],value);
-            //한번 실행 후
-//            System.out.println(i + "번째 값을 넣고 실행 후");
-//            System.out.println(discountQue);
-//            System.out.println(discountMap);
+
 
         }
         return answer;
     }
 
-    private static int compareList(Map<String, Integer> wantedMap, Map<String, Integer> discountMap) {
+    private int compareList(Map<String, Integer> wantedMap, Map<String, Integer> discountMap) {
         for (String s : wantedMap.keySet()) {
             if(wantedMap.get(s) > discountMap.getOrDefault(s,0)){
                 return 0;
