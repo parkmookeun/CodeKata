@@ -5,8 +5,10 @@ class Solution {
         //정답을 담을 배열
         int[] answer = new int[targets.length];
         
-        //keymap을 전부 합쳐서 만든 효율적인 map
+        //keymap을 전부 합쳐서 각 문자를 누르키위해 최소한의 누름만 저장된
+        //효율적인 map
         Map<Character,Integer> map = new HashMap<>();
+        
         for(int i=0; i<keymap.length; i++){
             String key = keymap[i];
             for(int j=0; j<key.length(); j++){
@@ -18,6 +20,7 @@ class Solution {
                 }
             }
         }
+        
         //이제 키판에 맞춰서 targets들 검사
         for(int i=0; i<targets.length; i++){
             int subAnswer = 0;
