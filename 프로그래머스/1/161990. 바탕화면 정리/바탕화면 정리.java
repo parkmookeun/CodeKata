@@ -13,18 +13,22 @@ class Solution {
             for(int j=0; j<wallpaper[i].length(); j++){
                 if(wallpaper[i].charAt(j) == '#'){
                     //시작점 x보다 더 가깝다면
-                    if(j < sy){
-                        sy = j;
-                    }
-                    if(j+1 > ey){
-                        ey = j+1;
-                    }
-                    if(i < sx){
-                        sx = i;
-                    }
-                    if(i+1 > ex){
-                        ex = i+1;
-                    }
+                    sy = j < sy ? j : sy;
+                    ey = j+1 > ey ? j+1 : ey;
+                    sx = i < sx ? i : sx;
+                    ex = i+1 > ex ? i+1 : ex;
+                    // if(j < sy){
+                    //     sy = j;
+                    // }
+                    // if(j+1 > ey){
+                    //     ey = j+1;
+                    // }
+                    // if(i < sx){
+                    //     sx = i;
+                    // }
+                    // if(i+1 > ex){
+                    //     ex = i+1;
+                    // }
                 }
             }
         }
