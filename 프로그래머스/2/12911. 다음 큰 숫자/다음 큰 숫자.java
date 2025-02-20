@@ -1,4 +1,5 @@
-// 반복문 안에서 
+// n에서 1씩 더하면서 검증 로직을 수행한다.
+
 import java.util.*;
 
 class Solution {
