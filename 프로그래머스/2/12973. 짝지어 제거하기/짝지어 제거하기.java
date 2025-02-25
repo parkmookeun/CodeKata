@@ -1,3 +1,4 @@
+// Stack 을 이용한 쉬운 풀이가 가능!
 import java.util.Stack;
 
 class Solution
