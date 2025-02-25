@@ -1,3 +1,5 @@
+// yellow의 가로 세로가 될 수 있는 경우의 수를 구함
+// 각 경우마다 검사해서 brown 개수가 되면 답이니까 break
 class Solution {
     public int[] solution(int brown, int yellow) {
         int[] answer = new int[2];
