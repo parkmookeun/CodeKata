@@ -1,29 +1,26 @@
-import java.util.*;
+// 핵심 아이디어: 배열의 최소공배수를 계속 구한다.
+import java.util.Arrays;
+
 class Solution {
     public int solution(int[] arr) {
-        Arrays.sort(arr);
-
-        if(arr.length == 1){
-            return arr[0];
-        }
-
-        int value = findLCM(arr[0],arr[1]);
-
-        for(int i=2; i<arr.length; i++){
-            value = findLCM(value,arr[i]);
-//            System.out.println(value);
-        }
-        return value;
-    }
-
-    int findLCM(int a, int b){
-        int til = Math.min(a, b);
+        int answer = 0;
+        
         int gcd = 1;
-//        System.out.println("a,b " + a +", "+ b);
-        for(int i=1; i<=til; i++){
-            if( a % i == 0 && b % i == 0) gcd = i;
+        int lcm = gcd*arr[0];
+        
+        Arrays.sort(arr);
+        
+        for(int i=1; i<arr.length; i++){
+            //배열의 각 요소에 접근
+            for(int j=1; j<=arr[i]; j++){
+                if(lcm % j == 0 && arr[i] %j == 0){
+                    gcd = j;
+                }
+            }
+            //최소공배수 구하기
+            lcm = gcd * lcm / gcd * arr[i] / gcd;
+            answer = lcm;
         }
-//        System.out.println("최소공배수: " + a * b / gcd);
-        return a * b / gcd;
+        return answer;
     }
 }
