@@ -1,0 +1,15 @@
+SELECT 
+    i1.FOOD_TYPE,
+    i1.REST_ID,
+    i1.REST_NAME,
+    i1.FAVORITES
+FROM 
+    REST_INFO i1
+WHERE 
+    i1.FAVORITES = (
+        SELECT MAX(i2.FAVORITES) 
+        FROM REST_INFO i2 
+        WHERE i2.FOOD_TYPE = i1.FOOD_TYPE
+    )
+ORDER BY 
+    i1.FOOD_TYPE DESC;
