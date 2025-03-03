@@ -12,7 +12,6 @@ class Solution {
             
             // 같은 단어를 말한 경우
             if(wordSet.contains(words[i])){
-                System.out.println(words[i]);
                 answer[0] = i % n + 1;
                 answer[1] = i / n + 1;
                 break;
