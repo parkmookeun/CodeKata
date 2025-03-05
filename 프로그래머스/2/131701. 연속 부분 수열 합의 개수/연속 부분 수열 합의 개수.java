@@ -1,10 +1,13 @@
 //핵심 아이디어: 원형 수열 표현을 어떻게 할 건지 & 중복 값 제외 (Set)
-// -> 원형은 배열의 마지막 인덱스 다음 인덱스를 처음으로 다시 돌려주는 로직으로 표현
+// -> i = 0 부터 n-1까지 반복하는 for문 안에 idx 선언
+// 선언한 idx가 i가 되기 전까지 값 추가 
 import java.util.HashSet;
 import java.util.Set;
+
 class Solution {
     public int solution(int[] elements) {
         int answer = 0;
+        
         int start = 0;
         int temp = 0;
         
@@ -17,9 +20,11 @@ class Solution {
             sets.add(elements[i]);
             
             start += 1;
+            
             if(start >= elements.length){
                     start = 0;
             }
+            
             //시작점으로 다시 돌아올때까지 가능한 수 sets에 추가
             while(start != i){
                 temp += elements[start];
