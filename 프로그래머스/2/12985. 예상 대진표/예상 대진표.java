@@ -8,7 +8,6 @@ class Solution
     {
         int answer = 0;
         
-        
         while(a != b){
             a = a % 2 == 1 ? a+1 : a;
             b = b % 2 == 1 ? b+1 : b;
@@ -18,7 +17,7 @@ class Solution
             
             answer++;
         }
-
+        
         return answer;
     }
 }
