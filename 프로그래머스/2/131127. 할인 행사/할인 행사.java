@@ -6,23 +6,26 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Deque;
-    
+
 class Solution {
     public int solution(String[] want, int[] number, String[] discount) {
         int answer = 0;
         
         Map<String,Integer> toBuy = new HashMap<>();
         Map<String,Integer> toDiscount = new HashMap<>();
+        
         Deque<String> disCount = new LinkedList<>();
         
         // 내 희망 목록과 그 갯수 맵에 저장
         for(int i=0; i<want.length; i++){
             toBuy.put(want[i],number[i]);        
         }
+        
         // 1-10일까지의 할인 품목 목록과 그 갯수 맵에 저장
         for(int i=0; i<10; i++){
-            toDiscount.put(discount[i], toDiscount.getOrDefault(discount[i],0)+1);    
+            toDiscount.put(discount[i], toDiscount.getOrDefault(discount[i],0) + 1);    
         }
+        
         // 1-10일까지 할인 품목 목록 큐에 저장
         for(int i=0; i<10; i++){
             disCount.add(discount[i]);
@@ -44,7 +47,6 @@ class Solution {
             
             if(isOk) answer++;
 
-            
             startIdx++;
             
             if(startIdx == discount.length){
@@ -58,7 +60,6 @@ class Solution {
             //큐에서 삭제한 값 및 새값 -> 맵에 반영
             toDiscount.put(removed, toDiscount.getOrDefault(removed,0) -1);
             toDiscount.put(discount[startIdx], toDiscount.getOrDefault(discount[startIdx],0)+1);
-
         }
         
         return answer;
