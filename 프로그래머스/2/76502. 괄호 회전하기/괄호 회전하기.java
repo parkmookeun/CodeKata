@@ -11,6 +11,7 @@ class Solution {
     public int solution(String s) {
         int length = 0;
         int answer = 0;
+        
         Deque<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
         Map<Character,Character> map = new HashMap<>();
@@ -44,12 +45,14 @@ class Solution {
                 queue.add(qChar);
                 length++;
             }
+            
             if(stack.isEmpty()){
                 answer++;
             }
             // 길이만큼의 검사가 끝나면, 첫번째 값을 빼서 마지막 갚에 넣어준다.
             queue.add(queue.pollFirst());
             }
+        
             return answer;
     }
 }
