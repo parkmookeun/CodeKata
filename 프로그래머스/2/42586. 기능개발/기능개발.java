@@ -1,40 +1,41 @@
-import java.util.*;
+//핵심 아이디어 : 뒤에 있는 기능이 앞에 있는 기능보다 먼저 개발되어도 배포는 함께 된다.
+
+import java.util.ArrayList;
+import java.util.List;
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        //큐에 progresses 값들을 넣는다.
-        Queue<Integer> queue = new LinkedList<>();
-        ArrayList<Integer> answerList = new ArrayList<>();
-        int count = 0;
-        int removedCount = 0;
+        
+        //배포가 된 작업들을 담을 배열
+        List<Integer> answer = new ArrayList<>();
+    
+        //작업이 진행되었을 때, 100%인 작업의 개수와 인덱스
         int idx = 0;
-
-        //큐에 i번째 작업의 실행률을 넣는다.
-        for(int i=0; i<progresses.length; i++){
-            queue.add(progresses[i]);
-        }
-        //큐에 값이 없을 때까지
-        while(!queue.isEmpty()){
-            //큐의 사이즈 만큼 빼서 다시 넣기
+        int count = 0;
+        
+        while(idx < progresses.length){
             count = 0;
-            idx = 0;
-            while(!queue.isEmpty() && queue.peek() >= 100){
-                queue.poll();
-                count++;
-                removedCount++;
-            }
-
-            if(count != 0){
-                answerList.add(count);
-            }
-
-            //큐 업데이트 ( 다음 날로)
-            while(idx != queue.size()){
-                Integer polled = queue.poll();
-                queue.add(polled+speeds[removedCount+idx]);
+            process(progresses, speeds);
+            
+            while( idx < progresses.length && progresses[idx] == 100){
                 idx++;
+                count++;
+            }
+            
+            //한번 배포되었을 때 answer에 count를 추가
+            if(count > 0){
+                answer.add(count);    
             }
         }
-
-        return answerList.stream().mapToInt(i -> i).toArray();
+        
+        return answer.stream()
+        .mapToInt(Integer::intValue)
+            .toArray();
+    }
+    
+    //진행 함수
+    void process(int[] progresses, int[] speeds){
+        for(int i=0; i<progresses.length; i++){
+            progresses[i] = Math.min(progresses[i]+speeds[i],100);
+        }
     }
 }
