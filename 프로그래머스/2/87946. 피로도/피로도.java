@@ -9,7 +9,9 @@ class Solution {
         visited = new boolean[dungeons.length];
         
         for(int i=0; i<dungeons.length; i++){
-            dfs(i,k,1,dungeons);
+            if(dungeons[i][0] <= k){
+                dfs(i,k,1,dungeons);    
+            }
         }
         
         return count;
