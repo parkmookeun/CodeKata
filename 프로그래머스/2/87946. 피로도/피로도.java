@@ -1,46 +1,33 @@
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Arrays;
+// DFS - 완전 탐색
+// 모든 던전을 시작 던전으로 돌면서, 최대 가능 던전 수 구하기
 class Solution {
-    class Route{
-        int k;
-        int cnt;
-        boolean[] visited;
-        
-        public Route(int k, int cnt, boolean[] visited){
-            this.k = k;
-            this.cnt = cnt;
-            this.visited = visited;
-            
-        }
-    }
+    static boolean[] visited;
+    static int count;
+    
     public int solution(int k, int[][] dungeons) {
-        int answer = -1;
 
-        Deque<Route> queue = new LinkedList<>();
-        boolean[] visited = new boolean[dungeons.length];
-        //k 피로도 cnt 클리어던전개수, visited
-        int cnt = 0;
+        visited = new boolean[dungeons.length];
         
-        queue.add(new Route(k,cnt,visited));
-
-        while(!queue.isEmpty()){
-
-            Route route= queue.poll();
-            answer=Math.max(answer,route.cnt);
-
-
-            for(int i=0;i<dungeons.length;i++){
-                boolean[] tempV=Arrays.copyOf(route.visited,dungeons.length);
-                if(tempV[i]!=true && route.k>=dungeons[i][0]){//안가본곳이고 k가최소피로도보다 높다면
-                    tempV[i]=true;
-
-                    queue.add(new Route(route.k-dungeons[i][1],route.cnt+1,tempV.clone()));
-                }
+        for(int i=0; i<dungeons.length; i++){
+            dfs(i,k,1,dungeons);
+        }
+        
+        return count;
+    }
+    //dfs 탐색 함수
+    void dfs(int idx, int fatigue, int depth, int[][] dungeons){
+        
+        count = Math.max(count,depth);
+        
+        //탐색할 수 있으면
+        visited[idx] = true;
+        fatigue -= dungeons[idx][1];
+        
+        for(int i=0; i<dungeons.length; i++){
+            if(!visited[i] && fatigue >= dungeons[i][0]){
+                dfs(i,fatigue, depth+1, dungeons);
             }
         }
-
-
-        return answer;
+        visited[idx] = false;
     }
 }
