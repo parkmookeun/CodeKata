@@ -1,30 +1,46 @@
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Arrays;
 class Solution {
-    private static int maxCount = 0;
-    public  int solution(int k, int[][] dungeons) {
-        int answer = -1;
-        boolean[] visited = new boolean[dungeons.length];
-
-        //출발을 던전의 모든 곳에서 출발
-        for(int i=0; i< dungeons.length; i++){
-            if(k >= dungeons[i][0]) {  // 초기 조건 체크
-                visited = new boolean[dungeons.length];  // visited 초기화
-                dfs(i, dungeons, visited, 1, k - dungeons[i][1]);  // 첫 던전의 피로도 차감
-            }
+    class Route{
+        int k;
+        int cnt;
+        boolean[] visited;
+        
+        public Route(int k, int cnt, boolean[] visited){
+            this.k = k;
+            this.cnt = cnt;
+            this.visited = visited;
+            
         }
-        answer = maxCount;
-        return answer;
     }
+    public int solution(int k, int[][] dungeons) {
+        int answer = -1;
 
-    private  void dfs(int idx, int[][] dungeons, boolean[] visited, int count, int k) {
-        visited[idx] = true;
-        maxCount = Math.max(maxCount,count);
+        Deque<Route> queue = new LinkedList<>();
+        boolean[] visited = new boolean[dungeons.length];
+        //k 피로도 cnt 클리어던전개수, visited
+        int cnt = 0;
+        
+        queue.add(new Route(k,cnt,visited));
 
-        //안들른 곳 모두 들르기
-        for(int i=0; i<dungeons.length; i++){
-            if(!visited[i] && k >= dungeons[i][0]){
-                dfs(i,dungeons,visited,count+1,k - dungeons[i][1]);
-                visited[i] = false;
+        while(!queue.isEmpty()){
+
+            Route route= queue.poll();
+            answer=Math.max(answer,route.cnt);
+
+
+            for(int i=0;i<dungeons.length;i++){
+                boolean[] tempV=Arrays.copyOf(route.visited,dungeons.length);
+                if(tempV[i]!=true && route.k>=dungeons[i][0]){//안가본곳이고 k가최소피로도보다 높다면
+                    tempV[i]=true;
+
+                    queue.add(new Route(route.k-dungeons[i][1],route.cnt+1,tempV.clone()));
+                }
             }
         }
+
+
+        return answer;
     }
 }
