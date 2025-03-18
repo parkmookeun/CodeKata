@@ -1,38 +1,51 @@
-import java.util.*;
+// 핵심 아이디어 :  큐 + 현재 빠져 나가야할 중요도가 무엇인지 체크하는 로직
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Arrays;
+
 class Solution {
-    public static int solution(int[] priorities, int location) {
+    public int solution(int[] priorities, int location) {
         int answer = 0;
-        //priorities의 인덱스, 큐 생성
-        int p_idx = 0;
-        Queue<Integer> queue = new LinkedList<>();
 
-        //queue 초기화
+        
+        Queue<Node> queue = new LinkedList<>();
+        int[] outSequence = priorities.clone();
+                
+        Arrays.sort(outSequence);
+        
+        int seqIdx = outSequence.length-1;
+        int count = 0;
+        
         for(int i=0; i<priorities.length; i++){
-            queue.add(priorities[i]);
+            queue.add(new Node(priorities[i],i));
         }
-        //priorities 배열 정렬
-        Arrays.sort(priorities);
-        for(int i = 0; i < priorities.length / 2; i++) {
-            int temp = priorities[i];
-            priorities[i] = priorities[priorities.length - 1 - i];
-            priorities[priorities.length - 1 - i] = temp;
-        }
-
-        while(location >= 0){
-            Integer polled = queue.poll();
-            location--;
-
-            if(polled == priorities[p_idx]){
-                p_idx++;
-                answer += 1;
-            }else {
-                queue.add(polled);
-                if(location == -1){
-                    location = queue.size()-1;
+        
+        //하나씩 빼면서 검사
+        while(true){
+            
+            Node node = queue.poll();
+            
+            if(node.value == outSequence[seqIdx]){
+                count++;
+                seqIdx--;
+                if(node.idx == location){
+                    answer = count;
+                    break;
                 }
-            }
+            } 
+            else queue.add(node);
         }
-
+        
         return answer;
+    }
+}
+
+class Node{
+    int value;
+    int idx;
+    
+    public Node(int value, int idx){
+        this.value = value;
+        this.idx = idx;
     }
 }
