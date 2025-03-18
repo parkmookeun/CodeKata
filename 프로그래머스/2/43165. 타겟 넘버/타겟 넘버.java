@@ -7,13 +7,11 @@ class Solution {
     }
 
     private  static void dfs(int[] numbers, int target, int current, int depth) {
-//        System.out.print(current);
 
         if(depth == numbers.length){
             if(current == target){
                 answer += 1;
             }
-//            System.out.println();
             return;
         }
 
