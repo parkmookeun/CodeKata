@@ -8,8 +8,8 @@ class Solution {
         Set<Integer> set = new LinkedHashSet<>();
         
         // 문자열에서 중괄호, 공백 제거하고 배열 단위로 분리
-        s = s.replace("{{", "{").replace("}}", "}");
-        String[] arrayStrings = s.substring(1, s.length() - 1).split("\\},\\{");
+        s = s.replace("{{", "{").replace("}}", "}");         
+        String[] arrayStrings = s.substring(1, s.length() - 1).split("\\},\\{");  // },{
         
         // 각 배열 문자열을 실제 정수 배열로 변환
         List<List<Integer>> arrays = new ArrayList<>();
@@ -39,6 +39,5 @@ class Solution {
         }
         
         return set.stream().mapToInt(Integer::intValue).toArray();
-        
     }
 }
