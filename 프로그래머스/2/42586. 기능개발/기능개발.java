@@ -1,41 +1,31 @@
-//핵심 아이디어 : 뒤에 있는 기능이 앞에 있는 기능보다 먼저 개발되어도 배포는 함께 된다.
+// 핵심 아이디어 : 기능 별로 남은 일수 계산 + 스택 큐 활용
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        
-        //배포가 된 작업들을 담을 배열
+        Queue<Integer> queue = new LinkedList<>();
         List<Integer> answer = new ArrayList<>();
-    
-        //작업이 진행되었을 때, 100%인 작업의 개수와 인덱스
-        int idx = 0;
-        int count = 0;
         
-        while(idx < progresses.length){
-            count = 0;
-            process(progresses, speeds);
-            
-            while( idx < progresses.length && progresses[idx] == 100){
-                idx++;
-                count++;
-            }
-            
-            //한번 배포되었을 때 answer에 count를 추가
-            if(count > 0){
-                answer.add(count);    
-            }
+        //남은 일수 큐에 저장
+        for(int i=0; i<progresses.length; i++){
+            int restDays = (int)(Math.ceil((double)(100 - progresses[i]) / speeds[i]));
+            queue.add(restDays);
         }
         
+        //큐가 빌 때까지 반복
+        while(!queue.isEmpty()){
+            int poll = queue.poll();
+            int count = 1;
+            //기능 하나 빼고 그 기능보다 빨리 완성되어있었으면 계속 빼기
+            while(!queue.isEmpty() && queue.peek() <= poll){
+                queue.poll();
+                count++;
+            }
+            answer.add(count);
+        }
+        //정답 배열 리턴
         return answer.stream()
         .mapToInt(Integer::intValue)
             .toArray();
-    }
-    
-    //진행 함수
-    void process(int[] progresses, int[] speeds){
-        for(int i=0; i<progresses.length; i++){
-            progresses[i] = Math.min(progresses[i]+speeds[i],100);
-        }
     }
 }
