@@ -21,6 +21,7 @@ class Solution {
                 queue.poll();
                 count++;
             }
+            //정답 리스트에 개수 추가
             answer.add(count);
         }
         //정답 배열 리턴
