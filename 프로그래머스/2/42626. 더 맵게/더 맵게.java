@@ -1,4 +1,4 @@
-// 핵심 아이디어 : 우선순위 큐를 아는지
+// 핵심 아이디어 : 우선순위 큐를 아는지 -> 데이터 삽입 오름차순
 import java.util.*;
 class Solution {
     public int solution(int[] scoville, int K) {
