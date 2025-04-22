@@ -6,7 +6,7 @@ class Solution {
 
         int[][] dist = new int[N+1][N+1];
         
-        //최대값으로 일단 초기화 10000 * 2000 + 1
+        //거리를 최대값으로 일단 초기화 10000 * 2000 + 1
         for(int i=1; i<=N; i++){
             Arrays.fill(dist[i],10000 * 2000 + 1);
         }
@@ -34,13 +34,11 @@ class Solution {
             }
         }
         
-        //마을1까지의 거리가 K이하인 경우 구하기(1번마을 빼고) -> 예를들어 dist[1][k] + dist[k][1]이 K값보다 클수도 있어서
-        //일단 2번부터 생각하고 나중에 그냥 + 1 하려고
+        //마을1까지의 거리가 K이하인 경우 구하기
         for(int i=1; i<=N; i++){
             if(dist[1][i] <= K) answer++;
         }
         
-        //1번마을도 포함해서
         return answer;
     }
 }
