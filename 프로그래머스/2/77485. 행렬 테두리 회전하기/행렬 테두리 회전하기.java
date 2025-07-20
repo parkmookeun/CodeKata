@@ -10,19 +10,17 @@ import java.util.List;
 class Solution {
     public static int[] solution(int rows, int columns, int[][] queries) {
         List<Integer> answer = new ArrayList<>();
+        //숫자들을 담을 배열을 만듦.
         int[][] map = new int[rows+1][columns+1];
-
+        
+        //이중배열에 값 담기
         int value = 0;
         for (int i = 1; i <= rows; i++) {
             for(int j = 1; j <= columns; j++){
                 map[i][j] = ++value;
             }
         }
-
-//        for (int[] row : map) {
-//            System.out.println(Arrays.toString(row));
-//        }
-
+        //queries를 돌면서 요소마다 테두리 회전을 해줌.
         for (int i = 0; i < queries.length; i++) {
             int minValue = rotateBorder(queries[i][0], queries[i][1], queries[i][2], queries[i][3], map);
             answer.add(minValue);
@@ -31,7 +29,8 @@ class Solution {
         return answer.stream().mapToInt(i -> i).toArray();
     }
 
-    // 행렬을 회전시키는 함수
+    // 행렬을 회전시키는 함수 -> 회전시킬 때 가장자리 값이 값이 겹침
+    // 따라서 미리 가장자리에 오는 값을 빼놓고, 그 외의 위치만 이동시켜서 마지막에 가장 자리 값을 넣음.
     public static int rotateBorder(int lx, int ly, int rx, int ry, int[][] map) {
         //가장 작은 수를 저장
         int value = (map.length - 1) * (map[0].length - 1) + 1;
@@ -63,18 +62,13 @@ class Solution {
             map[i][ly] = map[i+1][ly];
             value = Math.min( map[i][ly], value);
         }
-
+        //마지막에 가장자리에 값 넣어주기
         map[lx][ly] = leftUp;
         map[lx][ry] = rightUp;
         map[rx][ly] = leftDown;
         map[rx][ry] = rightDown;
-
+        //value 갱신
         value = Math.min(Math.min(Math.min(Math.min(value,leftUp), rightUp),leftDown),rightDown);
-
-        // 출력해보기
-//        for (int[] row : map) {
-//            System.out.println(Arrays.toString(row));
-//        }
 
         return value;
     }
